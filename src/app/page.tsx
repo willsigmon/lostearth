@@ -75,12 +75,9 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Coming soon */}
-        <div className="mt-8 border border-dashed border-white/10 rounded-xl p-6 text-center">
-          <p className="text-white/30 text-sm">
-            More mysteries coming soon: MH370, DB Cooper, Lost City of Z...
-          </p>
-        </div>
+        <p className="mt-8 text-center text-white/20 text-xs">
+          {MYSTERIES.length} active investigations &middot; More added regularly
+        </p>
       </div>
     </main>
   );
