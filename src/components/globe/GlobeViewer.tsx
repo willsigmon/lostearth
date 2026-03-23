@@ -75,13 +75,14 @@ export default function GlobeViewer({ mystery }: GlobeViewerProps) {
         }
       }
 
-      // Fly to mystery location
+      // Fly to mystery location — map default_zoom to altitude in meters
       if (mystery && !viewer.isDestroyed()) {
+        const altitude = zoomToAltitude(mystery.default_zoom);
         viewer.camera.flyTo({
           destination: Cesium.Cartesian3.fromDegrees(
             mystery.center_lng,
             mystery.center_lat,
-            50_000
+            altitude
           ),
           orientation: {
             heading: Cesium.Math.toRadians(0),
@@ -176,6 +177,13 @@ export default function GlobeViewer({ mystery }: GlobeViewerProps) {
       style={{ position: "absolute", inset: 0, overflow: "hidden" }}
     />
   );
+}
+
+/** Convert a map-style zoom level (1-20) to camera altitude in meters */
+function zoomToAltitude(zoom: number): number {
+  // Approximate: at zoom 1 we're ~20,000km out, halving per zoom level
+  // zoom 4 → ~2,500km, zoom 6 → ~600km, zoom 10 → ~40km, zoom 13 → ~5km, zoom 15 → ~1.2km
+  return 40_000_000 / Math.pow(2, zoom);
 }
 
 function getGibsLayerName(layerId: string): string {
