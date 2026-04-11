@@ -43,3 +43,6 @@ next-env.d.ts
 
 # cesium static assets (copied from node_modules)
 /public/cesium
+.claude/
+.letta/
+.playwright-mcp/
